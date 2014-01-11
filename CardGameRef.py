@@ -10,6 +10,8 @@ class Data:
 	opponentHandNum=0
 	selfTricks=0
 	opponentTricks=0
+	selfPoints=0
+	opponentPoints=0
 	#coefficients
 	#*Base is how much it will change in the AI parameter floating
 	HandDiffCoefficient=10
@@ -24,7 +26,7 @@ class Data:
 	indexfirstBoundBase=0
 	indexsecondBound=0.8
 	indexsecondBoundBase=0
-
+	
 	#AI
 	AI_GAME=AI_JKL.AI();
 	def updateCoefficientsGame(self, win):
