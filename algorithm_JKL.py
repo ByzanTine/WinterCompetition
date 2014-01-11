@@ -5,9 +5,9 @@ def responseToChallenge(gameData, isPlayingSecond):
     if gameData.getTrickDiff() <= -3:
         return False
     if gameData.getTrickDiff() is 2:
-        return False
-    if gameData.getTrickDiff() is -2:
         return True
+    if gameData.getTrickDiff() is -2:
+        return False
     if len(gameData.selfHand)==0:
         if gameData.getTrickDiff()==0 :
             return False
