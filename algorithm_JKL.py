@@ -1,16 +1,26 @@
 import math
 def responseToChallenge(gameData, isPlayingSecond):
+    if gameData.getTrickDiff() >= 3:
+        return True
+    if gameData.getTrickDiff() <= -3:
+        return False
     if gameData.getTrickDiff() is 2:
         return False
     if gameData.getTrickDiff() is -2:
         return True
     if isPlayingSecond:
-        if gameData.challenge() > :
+        if gameData.challenge() > gameData.indexsecondBound:
             return True
-    elif gameData.challenge() > :
+    elif gameData.challenge() > gameData.indexfirstBound:
             return True
 	return False;
-def issueChanllenge(gameData, isPlayingSecond, opponentsCard=0):
+def issueChallenge(gameData, isPlayingSecond, opponentsCard=0):
+    if gameData.getTrickDiff() >= 3:
+        return True
+    if gameData.getTrickDiff() <= -3:
+        return False
+    if isPlayingSecond:
+        if
 	return False;
 #return the index of card to play
 def playCard(gameData, isPlayingSecond, opponentsCard=0):
