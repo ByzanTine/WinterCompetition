@@ -43,5 +43,5 @@ def playCard(gameData, isPlayingSecond, opponentsCard=0):
 		# if cannot find a bigger one return the least
 		return gameData.selfHand[0]
 	else :
-		return gameData.selfHand[int(math.floor(len(gameData.selfHand)*(1-gameData.challenge())))]
+		return gameData.selfHand[int(math.floor((len(gameData.selfHand) - 1)*(1-gameData.challenge())))]
 

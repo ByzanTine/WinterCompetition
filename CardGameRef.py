@@ -1,5 +1,6 @@
 # from array import *
 import AI_JKL
+
 class Data:
 	deck=[]
 	decksum=0
@@ -27,8 +28,8 @@ class Data:
 	#AI
 	AI_GAME=AI_JKL.AI();
 	def updateCoefficientsGame(self, win):
-		if AI_GAME.registerTournamentResult(win):
-			newParams=AI_GAME.getNewParameters([self.HandDiffCoefficient, self.TrickCoefficient, self.ChallengeLowerBound, self.ChallengeBoundLength, self.indexfirstBound, self.indexsecondBound],
+		if self.AI_GAME.registerTournamentResult(win):
+			newParams=self.AI_GAME.getNewParameters([self.HandDiffCoefficient, self.TrickCoefficient, self.ChallengeLowerBound, self.ChallengeBoundLength, self.indexfirstBound, self.indexsecondBound],
 				[self.HandDiffCoefficientBase, self.TrickCoefficientBase, self.ChallengeLowerBoundBase, self.ChallengeBoundLengthBase, self.indexfirstBoundBase, self.indexsecondBoundBase])
 			self.HandDiffCoefficient=newParams[0]
 			self.TrickCoefficient=newParams[1]
@@ -50,7 +51,8 @@ class Data:
 			rank+=self.deck[i]
 		rank+=self.deck[val-1]/2
 		return rank
-
+	def getTrickDiff(self):
+		return self.selfTricks - self.opponentTricks
     #from 0 to 1, chance to win this round
 	def challenge(self):
 		index=self.HandDiffCoefficient*(self.selfHandsum-self.opponentHandsum)/self.decknum + self.TrickCoefficient*(self.selfTricks-self.opponentTricks)/(len(self.selfHand))
@@ -80,6 +82,7 @@ class Data:
 	def gameStart(self,hand):
 		self.selfTricks=0
 		self.opponentTricks=0
+		self.selfHand=[0,0,0,0,0]
 		self.selfHand=hand
 		self.selfHandsum=0
 		for i in range(len(self.selfHand)):
@@ -93,6 +96,7 @@ class Data:
 		while(len(self.selfHand)!=0):
 			self.selfHand.pop()
 		self.selfHandsum=0
+		self.selfHand=[0,0,0,0,0]
 	#make sure handval exist
 	def updateHand(self,handval):
 		
@@ -103,26 +107,26 @@ class Data:
 		self.decksum-=cardval
 		self.decknum-=1
 		
-x=Data()
-x.shuffle()
-print x.getRank(1)
-print len(x.deck)
-print x.decksum
-print x.deck[7]
+# x=Data()
+# x.shuffle()
+# print x.getRank(1)
+# print len(x.deck)
+# print x.decksum
+# print x.deck[7]
 
-x.shuffle()
-print len(x.deck)
-x.gameStart([1,3,4,5,6])
-print x.selfHand
-print "selfHandsum:"
-print x.selfHandsum
-x.selfTricks=x.selfTricks+1
-print x.selfTricks
-x.challenge()
-x.updateHand(5)
-print x.selfHand
-print x.selfHandsum
-x.gameEnd()
-print x.selfHand
-print "opponentHandsum: "
-print x.getOpponentHandSum(5)
+# x.shuffle()
+# print len(x.deck)
+# x.gameStart([1,3,4,5,6])
+# print x.selfHand
+# print "selfHandsum:"
+# print x.selfHandsum
+# x.selfTricks=x.selfTricks+1
+# print x.selfTricks
+# x.challenge()
+# x.updateHand(5)
+# print x.selfHand
+# print x.selfHandsum
+# x.gameEnd()
+# print x.selfHand
+# print "opponentHandsum: "
+# print x.getOpponentHandSum(5)

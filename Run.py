@@ -12,10 +12,10 @@ def sample_bot(host, port):
     s = SocketLayer(host, port)
 
     gameId = None
-
+    player = None
     while True:
         msg = s.pump()
-        player = None
+        
         if msg["type"] == "error":
             print("The server doesn't know your IP. It saw: " + msg["seen_host"])
             sys.exit(1)
@@ -45,8 +45,8 @@ def loop(player, *args):
             player(*args)
         except KeyboardInterrupt:
             sys.exit(0)
-        except Exception as e:
-            print(repr(e))
+        # except Exception as e:
+        #     print(repr(e))
         time.sleep(10)
 
 class SocketLayer:
@@ -67,7 +67,7 @@ class SocketLayer:
             msg.append(b)
 
         msg = "".join([chunk.decode('utf-8') for chunk in msg])
-
+        print("Comming Pack: \n %s \n" % msg )
         return json.loads(msg)
 
     def send(self, obj):
