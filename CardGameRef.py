@@ -11,18 +11,18 @@ class Data:
 	opponentTricks=0
 	#coefficients
 	#*Base is how much it will change in the AI parameter floating
-	HandDiffCoefficient=0
+	HandDiffCoefficient=5
 	HandDiffCoefficientBase=10
-	TrickCoefficient=0
+	TrickCoefficient=10
 	TrickCoefficientBase=10
 	ChallengeLowerBound=0
 	ChallengeLowerBoundBase=10
-	ChallengeBoundLength=0
+	ChallengeBoundLength=20
 	ChallengeBoundLengthBase=10
-	indexfirstBound=0
-	indexfirstBoundBase=0.5
-	indexsecondBound=0
-	indexsecondBoundBase=0.5
+	indexfirstBound=0.7
+	indexfirstBoundBase=0.3
+	indexsecondBound=0.8
+	indexsecondBoundBase=0.3
 
 	#AI
 	AI_GAME=AI_JKL.AI();
@@ -53,19 +53,13 @@ class Data:
 
     #from 0 to 1, chance to win this round
 	def challenge(self):
-		index=self.HandDiffCoefficient*(self.selfHandsum-self.opponentHandsum)/self.getDeckSize() + self.TrickCoefficient*(self.selfTricks-self.opponentTricks)/(len(self.selfHand))
+		index=self.HandDiffCoefficient*(self.selfHandsum-self.opponentHandsum)/self.decknum + self.TrickCoefficient*(self.selfTricks-self.opponentTricks)/(len(self.selfHand))
 		ratio=(index-self.ChallengeLowerBound)/self.ChallengeBoundLength
 		if ratio<0:
 			return 0
 		if ratio>1:
 			return 1
 		return ratio
-
-	def getDeckSize(self):
-		sum=0
-		for i in deck:
-			sum+=i
-		return sum
 
 	def getOpponentHandSum(self,cardnum):
 		self.opponentHandsum = (self.decksum/self.decknum)*cardnum
