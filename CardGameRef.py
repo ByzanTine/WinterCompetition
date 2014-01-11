@@ -54,7 +54,9 @@ class Data:
     #from 0 to 1, chance to win this round
 	def challenge(self):
 		index=self.HandDiffCoefficient*(self.selfHandsum-self.opponentHandsum)/self.decknum + self.TrickCoefficient*(self.selfTricks-self.opponentTricks)/(len(self.selfHand))
+		print "card diff is "+str((self.selfHandsum-self.opponentHandsum)/self.decknum)
 		ratio=(index-self.ChallengeLowerBound)/self.ChallengeBoundLength
+		print "win chance is "+str(ratio)
 		if ratio<0:
 			return 0
 		if ratio>1:
