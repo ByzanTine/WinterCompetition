@@ -24,6 +24,13 @@ def issueChallenge(gameData, isPlayingSecond, opponentsCard=0):
         for i in selfHand:
             if i < opponentsCard:
                 allBigger = False
+        if allBigger and gameData.getTrickDiff() > 0:
+            return True
+    else: 
+        if gameData.getTrickDiff() <= 0:
+            return False
+        if gameData.getTrickDiff() is 2 and gameData.challenge() > gameData.indexfirstBound:
+            return True
 	return False;
 #return the index of card to play
 def playCard(gameData, isPlayingSecond, opponentsCard=0):
