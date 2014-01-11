@@ -74,6 +74,8 @@ def playCard(gameData, isPlayingSecond, opponentsCard=0):
 	print gameData.selfHand
     if len(gameData.selfHand) == 5 and sum(gameData.selfHand) - gameData.selfHand[0] - gameData.selfHand[1] > 32:
         return gameData.selfHand[0]
+    if len(gameData.selfHand) == 4 and sum(gameData.selfHand) - gameData.selfHand[0] > 32:
+        return gameData.selfHand[0]
     sub = gameData.selfHand[0]
     if isPlayingSecond :
         for i in gameData.selfHand:
