@@ -1,5 +1,10 @@
 import math
 def responseToChallenge(gameData, isPlayingSecond):
+    if gameData.selfPoints is 9:
+        if isPlayingSecond and gameData.challenge() > gameData.indexsecondBound:
+            return True 
+        elif gameData.challenge() > gameData.indexfirstBound:
+            return True
     if gameData.getTrickDiff() >= 3:
         return True
     if gameData.getTrickDiff() <= -3:
@@ -20,6 +25,11 @@ def responseToChallenge(gameData, isPlayingSecond):
     return False;
 def issueChallenge(gameData, isPlayingSecond, opponentsCard=0):
     print "issueChallenge: "+str(gameData.getTrickDiff())
+    if gameData.opponentPoints is 9:
+        if isPlayingSecond and gameData.challenge() > gameData.indexsecondBound:
+            return True 
+        elif gameData.challenge() > gameData.indexfirstBound:
+            return True
     if gameData.getTrickDiff() >= 3:
         return True
     if gameData.getTrickDiff() <= -3:
