@@ -19,11 +19,11 @@ def issueChallenge(gameData, isPlayingSecond, opponentsCard=0):
         return True
     if gameData.getTrickDiff() <= -3:
         return False
+    allBigger = True
     if isPlayingSecond:
         for i in selfHand:
             if i < opponentsCard:
-                return False
-        return True
+                allBigger = False
 	return False;
 #return the index of card to play
 def playCard(gameData, isPlayingSecond, opponentsCard=0):
