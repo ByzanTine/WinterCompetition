@@ -7,7 +7,6 @@ class Data:
 	deck=[]
 	decksum=0
 	decknum=0
-	selfHand=[0,0,0,0,0]
 	opponentHandsum=0
 	opponentHandNum=0
 	selfTricks=0
@@ -25,9 +24,11 @@ class Data:
 	ChallengeBoundLength=20
 	ChallengeBoundLengthBase=5
 	indexfirstBound=0.7
-	indexfirstBoundBase=0.2
+	indexfirstBoundBase=0.01
 	indexsecondBound=0.8
-	indexsecondBoundBase=0.2
+	indexsecondBoundBase=0.01
+	def __init__(self):
+		self.selfHand=[0,0,0,0,0]
 	def updateCoefficientsGame(self, win):
 		if AI_GAME.registerTournamentResult(win):
 			newParams=AI_GAME.getNewParameters([Data.HandDiffCoefficient, Data.TrickCoefficient, Data.ChallengeLowerBound, Data.ChallengeBoundLength, Data.indexfirstBound,Data.indexsecondBound],
@@ -58,8 +59,13 @@ class Data:
 	def challenge(self):
 		print "dicknum is "+str(self.decknum)
 		print "hand is %s" % self.selfHand
-		index=self.HandDiffCoefficient*1.0*(self.getHandRankSum()-self.getOpponentHandRankSum())/(self.decknum**2) \
-			+ self.TrickCoefficient*1.0*(self.selfTricks-self.opponentTricks)/(len(self.selfHand))
+		if(len(self.selfHand)!=0):
+			index=self.HandDiffCoefficient*1.0*(self.getHandRankSum()-self.getOpponentHandRankSum())/(self.decknum**2) \
+				+ self.TrickCoefficient*1.0*(self.selfTricks-self.opponentTricks)/(len(self.selfHand))
+		else:
+			index=self.HandDiffCoefficient*1.0*(self.getHandRankSum()-self.getOpponentHandRankSum())/(self.decknum**2) \
+				+ self.TrickCoefficient*1.0*(self.selfTricks-self.opponentTricks)
+		
 		print "card diff is "+str(1.0*(self.getHandRankSum()-self.getOpponentHandRankSum())/(self.decknum**2))
 		print "trick diff is " + str(self.selfTricks-self.opponentTricks)
 		ratio=(index-self.ChallengeLowerBound)/self.ChallengeBoundLength
@@ -82,13 +88,11 @@ class Data:
 
 	def getOpponentHandRankSum(self):
 
-
+		# print "cache is "+str(self.ohrs_cache)
 		try:
-			self.ohrs_cache # does a exist in the current namespace
+			self.ohrs_cache
 		except AttributeError:
-			self.ohrs_cache = " " # nope
-
-
+			self.ohrs_cache=" "
 		if self.ohrs_cache == " ":
 			for i in self.selfHand:
 				self.deck[i-1]+=1
@@ -116,6 +120,8 @@ class Data:
 			self.decksum=(i+1)*8+self.decksum
 			self.decknum=104
 	def gameStart(self,hand):
+		# console.log("gameStart")
+		print "gameStart"
 		self.selfTricks=0
 		self.opponentTricks=0
 		self.selfHand=[0,0,0,0,0]
