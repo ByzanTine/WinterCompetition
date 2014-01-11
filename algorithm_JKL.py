@@ -27,6 +27,8 @@ def responseToChallenge(gameData, isPlayingSecond):
     return False;
 def issueChallenge(gameData, isPlayingSecond, opponentsCard=0):
     print "issueChallenge: "+str(gameData.getTrickDiff())
+    if len(gameData.selfHand) == 0 and gameData.getTrickDiff() >= 0 and gameData.lastcard == 13:
+        return True
     if len(gameData.selfHand) ==5 and sum(gameData.selfHand) - gameData.selfHand[0] > 40:
         return True;
     if len(gameData.selfHand) ==4 and sum(gameData.selfHand) - gameData.selfHand[0] > 30:
@@ -70,6 +72,8 @@ def playCard(gameData, isPlayingSecond, opponentsCard=0):
 		print "opponentsCard: " + str(opponentsCard)
 	print "selfHand: "
 	print gameData.selfHand
+    if len(gameData.selfHand) == 5 and sum(gameData.selfHand) - gameData.selfHand[0] - gameData.selfHand[1] > 32:
+        return gameData.selfHand[0]
     sub = gameData.selfHand[0]
     if isPlayingSecond :
         for i in gameData.selfHand:
