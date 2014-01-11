@@ -47,12 +47,13 @@ class PlayerT:
 		self.response["request_id"] = req["request_id"]
 
 	def result(self, req):
-		cardval=O
-		self.data.cardExposed(cardval)
-		if Game_End:
+		if req["result"].has_key("type") and req["result"]["type"] == "trick_won":
+			cardval = req["result"]["card"]
+			self.data.cardExposed(cardval)
+		if req["result"].has_key("type") and req["result"]["type"] == "hand_done":
 			self.data.gameEnd()
 		
-	def response(self):
+	def return_response(self):
 		return self.response
 
 

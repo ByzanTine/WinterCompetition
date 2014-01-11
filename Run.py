@@ -28,12 +28,12 @@ def sample_bot(host, port):
             if msg["request"] == "request_card":
                 player.requests(msg)
                 # cardToPlay = msg["state"]["hand"][0]
-                s.send(player.response())
+                s.send(player.return_response())
             elif msg["request"] == "challenge_offered":
                 player.challenge(msg)
-                s.send(player.response())
+                s.send(player.return_response())
                 
-        elif msg["type"] == "result"
+        elif msg["type"] == "result":
             player.result(msg)
 
         elif msg["type"] == "greetings_program":
