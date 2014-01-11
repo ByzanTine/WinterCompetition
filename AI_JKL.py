@@ -6,7 +6,7 @@ class AI:
 	#false otherwise
 	lastWinPercentage=0
 	lastListOfParameters=[]
-	def __init__(self, totalCount = 4000, shakDecreaseRatio=0.95, countPeriod=100, shaking=2):
+	def __init__(self, totalCount = 6000, shakDecreaseRatio=0.95, countPeriod=100, shaking=2):
 		print "new AI created"
 		self.totalCount=totalCount;
 		self.shakDecreaseRatio=shakDecreaseRatio;
