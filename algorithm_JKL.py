@@ -31,7 +31,7 @@ def issueChallenge(gameData, isPlayingSecond, opponentsCard=0):
         elif gameData.challenge() > gameData.indexfirstBound:
             return True
     if gameData.getTrickDiff() >= 3:
-        return True
+        return False
     if gameData.getTrickDiff() <= -3:
         return False
     allBigger = True
