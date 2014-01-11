@@ -13,8 +13,8 @@ class AI:
 	
 	def registerTournamentResult(self, win):
 		if win:
-			self.winCount+=1;
-		self.totalCount+=1;
+			self.winCount+=1
+		self.totalCount+=1
 		return self.totalCount >= self.countPeriod
 	def getNewParameters(self, listOfParameters, listOfBases):
 		if self.lastWinPercentage > self.winCount*1.0/self.totalCount :
@@ -29,6 +29,5 @@ class AI:
 		self.totalCount=0
 		self.winCount=0
 		return listOfParameters;
-# ai = AI();
 # for i in range(10000):
 # 
