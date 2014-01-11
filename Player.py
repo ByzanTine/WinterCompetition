@@ -76,7 +76,7 @@ class PlayerT:
 				self.data.opponentTricks+=1
 
 		if req["result"].has_key("type") and req["result"]["type"] == "hand_done":
-			self.data.updateCoefficientsGame(True if req["result"].has_key("by") and req["result"] == req["your_player_num"] else False)
+			self.data.updateCoefficientsGame(True if req["result"].has_key("by") and req["result"]["by"] == req["your_player_num"] else False)
 			self.data.gameEnd()
 			
 			if(self.data.decknum<10):

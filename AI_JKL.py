@@ -6,6 +6,7 @@ class AI:
 	lastWinPercentage=0
 	lastListOfParameters=[]
 	def __init__(self, totalCount = 100, shakDecreaseRatio=0.95, countPeriod=100, shaking=2):
+		print "new AI created"
 		self.totalCount=totalCount;
 		self.shakDecreaseRatio=shakDecreaseRatio;
 		self.countPeriod=countPeriod;
@@ -17,18 +18,19 @@ class AI:
 		self.totalCount+=1
 		return self.totalCount >= self.countPeriod
 	def getNewParameters(self, listOfParameters, listOfBases):
-		print ("for %s" % listOfParameters)+", winRate is "+str(self.winCount*1.0/self.totalCount)
+		print ("for %s" % listOfParameters)+", winRate is "+str(self.winCount*1.0/self.totalCount)+" "+str(self.lastWinPercentage)
 		if self.lastWinPercentage > self.winCount*1.0/self.totalCount :
 			print "fallback"
-			listOfParameters=lastListOfParameters
+			listOfParameters=self.lastListOfParameters
 		else :
-			lastListOfParameters=listOfParameters
-			lastWinPercentage=self.winCount*1.0/self.totalCount
+			self.lastListOfParameters=listOfParameters
+			self.lastWinPercentage=self.winCount*1.0/self.totalCount
 		for x in range(0, len(listOfParameters)):
-			listOfParameters[x]=listOfParameters[x]*(1+self.shaking*(random.random()-0.5));
+			listOfParameters[x]=listOfParameters[x]+listOfBases[x]*(1+self.shaking*(random.random()-0.5));
 		self.shaking*=self.shakDecreaseRatio;
 		self.totalCount=0
 		self.winCount=0
+		print "new parameter is %s" % listOfParameters
 		return listOfParameters;
 # for i in range(10000):
 # 

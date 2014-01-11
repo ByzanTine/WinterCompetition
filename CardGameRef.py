@@ -1,6 +1,8 @@
 # from array import *
 import AI_JKL
 
+	#AI
+AI_GAME=AI_JKL.AI();
 class Data:
 	deck=[]
 	decksum=0
@@ -13,30 +15,29 @@ class Data:
 	#coefficients
 	#*Base is how much it will change in the AI parameter floating
 	HandDiffCoefficient=10
-	HandDiffCoefficientBase=0
+	HandDiffCoefficientBase=3
 	TrickCoefficient=10
-	TrickCoefficientBase=0
+	TrickCoefficientBase=3
 	ChallengeLowerBound=-10
-	ChallengeLowerBoundBase=0
+	ChallengeLowerBoundBase=5
 	ChallengeBoundLength=20
-	ChallengeBoundLengthBase=0
+	ChallengeBoundLengthBase=5
 	indexfirstBound=0.7
-	indexfirstBoundBase=0
+	indexfirstBoundBase=0.2
 	indexsecondBound=0.8
-	indexsecondBoundBase=0
-
-	#AI
-	AI_GAME=AI_JKL.AI();
+	indexsecondBoundBase=0.2
+	def __init__(self):
+		print "  HandDiffCoefficient is "+str(Data.HandDiffCoefficient)
 	def updateCoefficientsGame(self, win):
-		if self.AI_GAME.registerTournamentResult(win):
-			newParams=self.AI_GAME.getNewParameters([self.HandDiffCoefficient, self.TrickCoefficient, self.ChallengeLowerBound, self.ChallengeBoundLength, self.indexfirstBound, self.indexsecondBound],
-				[self.HandDiffCoefficientBase, self.TrickCoefficientBase, self.ChallengeLowerBoundBase, self.ChallengeBoundLengthBase, self.indexfirstBoundBase, self.indexsecondBoundBase])
-			self.HandDiffCoefficient=newParams[0]
-			self.TrickCoefficient=newParams[1]
-			self.ChallengeLowerBound=newParams[2]
-			self.ChallengeBoundLength=newParams[3]
-			self.indexfirstBound=newParams[4]
-			self.indexsecondBound=newParams[5]
+		if AI_GAME.registerTournamentResult(win):
+			newParams=AI_GAME.getNewParameters([Data.HandDiffCoefficient, Data.TrickCoefficient, Data.ChallengeLowerBound, Data.ChallengeBoundLength, Data.indexfirstBound,Data.indexsecondBound],
+				[Data.HandDiffCoefficientBase, Data.TrickCoefficientBase, Data.ChallengeLowerBoundBase, Data.ChallengeBoundLengthBase, Data.indexfirstBoundBase, Data.indexsecondBoundBase])
+			Data.HandDiffCoefficient=newParams[0]
+			Data.TrickCoefficient=newParams[1]
+			Data.ChallengeLowerBound=newParams[2]
+			Data.ChallengeBoundLength=newParams[3]
+			Data.indexfirstBound=newParams[4]
+			Data.indexsecondBound=newParams[5]
 	def printCoefficient(self):
 		print "HandDiffCoefficient "+self.HandDiffCoefficient
 		print "TrickCoefficient"+self.TrickCoefficient
@@ -80,6 +81,14 @@ class Data:
 		return rankValue
 
 	def getOpponentHandRankSum(self):
+
+
+		try:
+			self.ohrs_cache # does a exist in the current namespace
+		except AttributeError:
+			self.ohrs_cache = " " # nope
+
+
 		if self.ohrs_cache == " ":
 			for i in self.selfHand:
 				self.deck[i-1]+=1
