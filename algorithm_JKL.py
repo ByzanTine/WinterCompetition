@@ -12,7 +12,7 @@ def responseToChallenge(gameData, isPlayingSecond):
         if gameData.challenge() > gameData.indexsecondBound:
             return True
     elif gameData.challenge() > gameData.indexfirstBound:
-            return True
+        return True
 	return False;
 def issueChallenge(gameData, isPlayingSecond, opponentsCard=0):
     if gameData.getTrickDiff() >= 3:
@@ -20,7 +20,10 @@ def issueChallenge(gameData, isPlayingSecond, opponentsCard=0):
     if gameData.getTrickDiff() <= -3:
         return False
     if isPlayingSecond:
-        if
+        for i in selfHand:
+            if i < opponentsCard:
+                return False
+        return True
 	return False;
 #return the index of card to play
 def playCard(gameData, isPlayingSecond, opponentsCard=0):
