@@ -1,5 +1,7 @@
 import math
 def responseToChallenge(gameData, isPlayingSecond):
+    if gameData.opponentPoints == 9:
+        return True
     if gameData.selfPoints ==9:
         if len(gameData.selfHand) == 0 and gameData.opponentPoints == 9:
             return True
@@ -7,6 +9,8 @@ def responseToChallenge(gameData, isPlayingSecond):
             return True 
         else:
             return False
+    if len(gameData.selfHand) > 1 and (sum(gameData.selfHand)-gameData.selfHand[0])/(len(gameData.selfHand)-1) > 10:
+        return True
     if gameData.getTrickDiff() >= 3:
         return True
     if gameData.getTrickDiff() <= -3:
