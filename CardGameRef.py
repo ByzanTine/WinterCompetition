@@ -17,24 +17,38 @@ class Data:
 
 
     def getDecksum(self):
-    	return decksum
+    	return self.decksum
     def getSelfHandSum(self):
-    	return selfHandsum
+    	return self.selfHandsum
     def getOpponentHandSum(self):
-    	return opponentHandsum
+    	return self.opponentHandsum
    	def getSelfTricks(self):
-   		return selfTricks
+   		return self.selfTricks
    	def getOpponentTricks(self):
-   		return opponentTricks
+   		return self.opponentTricks
    	def getHandDiffCofficient(self):
-   		return HandDiffCoefficient
+   		return self.HandDiffCoefficient
    	def getTrickCoefficient(self):
-   		return TrickCoefficient
+   		return self.TrickCoefficient
    	def getTrickDiff(self):
-   		return selfTricks-opponentTricks
+   		return self.selfTricks-self.opponentTricks
+   	def Challenge(self):
+   		Challenge=self.HandDiffCoefficient*(self.selfHandsum - self.opponentHandsum)+self.TrickCoefficient*self.getTrickDiff()
+   		print "Challenge Const"+Challenge
+   		if(Challenge>0):
+   			return True
+   		else:
+   			return False
+
+
+
+
     #originate Vals
+
+
+
     def shuffle(self):
-    	decksum=0
+    	self.decksum=0
     	while(len(self.deck)!=0):
 			self.deck.pop()
 
@@ -45,16 +59,16 @@ class Data:
         	self.decksum=i*8+8+self.decksum
 
     def gameStart(self,hand):
-    	selfTricks=0
-    	opponentTricks=0
+    	self.selfTricks=0
+    	self.opponentTricks=0
     	self.selfHand=hand
 
     def gameEnd(self):
-    	selfTricks=0
-    	opponentTricks=0
+    	self.selfTricks=0
+    	self.opponentTricks=0
     	while(len(self.selfHand)!=0):
     		self.selfHand.pop()
-    	selfHandsum=0
+    	self.selfHandsum=0
 
 x=Data()
 x.shuffle()
@@ -70,3 +84,5 @@ x.gameEnd()
 print x.selfHand
 x.selfTricks=x.selfTricks+1
 print x.selfTricks
+print x.getDecksum()
+x.Challenge()
