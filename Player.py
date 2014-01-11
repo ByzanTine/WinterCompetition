@@ -21,7 +21,9 @@ class PlayerT:
 			else:
 				self.response = copy(self.req_card)
 				self.response["request_id"] = req["request_id"]
-				self.response["response"]["card"]= playCard(self.data,False)
+				cardval=playCard(self.data,False)
+				self.response["response"]["card"]= cardval
+				self.data.updateHand(cardval)
 		#second hand
 		else:
 			if req["state"]["can_challenge"] == "true" and issueChallenge(self.data,True,self.reg["state"]["card"]):
@@ -31,7 +33,9 @@ class PlayerT:
 			else:
 				self.response = copy(self.req_card)
 				self.response["request_id"] = req["request_id"]
-				self.response["response"]["card"]= playCard(self.data,True,self.reg["state"]["card"])
+				cardval=playCard(self.data,False)
+				self.response["response"]["card"]= cardval
+				self.data.updateHand(cardval)
 
 	def challenge(self,req):
 		self.response = copy(self.req_chal)
@@ -43,8 +47,11 @@ class PlayerT:
 		self.response["request_id"] = req["request_id"]
 
 	def result(self, req):
-		pass
-
+		cardval=O
+		self.data.cardExposed(cardval)
+		if Game_End:
+			self.data.gameEnd()
+		
 	def response(self):
 		return self.response
 
