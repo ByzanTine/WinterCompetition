@@ -5,6 +5,8 @@ def responseToChallenge(gameData, isPlayingSecond):
             return True 
         elif gameData.challenge() > gameData.indexfirstBound:
             return True
+    if gameData.opponentPoints is 9:
+        return True
     if gameData.getTrickDiff() >= 3:
         return True
     if gameData.getTrickDiff() <= -3:
