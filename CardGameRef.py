@@ -3,6 +3,7 @@
 class Data:
 	deck=[]
 	decksum=0
+	decknum=0
 	selfHandsum=0
 	selfHand=[0,0,0,0,0]
 	opponentHandsum=0
@@ -24,8 +25,9 @@ class Data:
 		#print "challenge index: "
 		#print a
 		return index
-	def getOpponentHandSum(self):
-		self.opponentHandsum=decksum
+	def getOpponentHandSum(self,cardnum):
+		self.opponentHandsum = (self.decksum/self.decknum)*cardnum
+		return self.opponentHandsum
 	def shuffle(self):
 		self.decksum=0
 
@@ -35,9 +37,10 @@ class Data:
 		
 		for i in range(0,13):
 			#self.decksum=i*8+8+self.decksum
+			
 			self.deck.append(8)
-			self.decksum=i*8+8+self.decksum
-
+			self.decksum=(i+1)*8+self.decksum
+			self.decknum=104
 	def gameStart(self,hand):
 		self.selfTricks=0
 		self.opponentTricks=0
@@ -45,7 +48,7 @@ class Data:
 		self.selfHandsum=0
 		for i in range(len(self.selfHand)):
 			self.selfHandsum+=self.selfHand[i]
-		
+		self.decknum-=5
 
 	def gameEnd(self):
 		self.selfTricks=0
@@ -57,10 +60,15 @@ class Data:
 	#make sure handval exist
 	def updateHand(self,handval):
 		self.deck[handval-1]-=1
-		decksum-=handval
+		self.decksum-=handval
+		self.decknum-=1
 		self.selfHand.remove(handval)
 		self.selfHandsum-=handval
-
+	def cardExposed(self,cardval):
+		self.deck[cardval-1]-=1
+		self.decksum-=cardval
+		self.decknum-=1
+		
 x=Data()
 x.shuffle()
 print x.getRank(1)
@@ -82,3 +90,5 @@ print x.selfHand
 print x.selfHandsum
 x.gameEnd()
 print x.selfHand
+print "opponentHandsum: "
+print x.getOpponentHandSum(5)
