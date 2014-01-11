@@ -40,6 +40,8 @@ class Data:
 		while(len(self.selfHand)!=0):
 			self.selfHand.pop()
 		self.selfHandsum=0
+	def updateHand(handval):
+		deck[handval-1]-=1
 
 x=Data()
 x.shuffle()
