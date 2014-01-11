@@ -8,22 +8,23 @@ class Data:
 	selfHandsum=0
 	selfHand=[0,0,0,0,0]
 	opponentHandsum=0
+	opponentHandNum=0
 	selfTricks=0
 	opponentTricks=0
 	#coefficients
 	#*Base is how much it will change in the AI parameter floating
-	HandDiffCoefficient=5
-	HandDiffCoefficientBase=10
-	TrickCoefficient=10
-	TrickCoefficientBase=10
-	ChallengeLowerBound=0
-	ChallengeLowerBoundBase=10
+	HandDiffCoefficient=10
+	HandDiffCoefficientBase=0
+	TrickCoefficient=104
+	TrickCoefficientBase=0
+	ChallengeLowerBound=-10
+	ChallengeLowerBoundBase=0
 	ChallengeBoundLength=20
-	ChallengeBoundLengthBase=10
+	ChallengeBoundLengthBase=0
 	indexfirstBound=0.7
-	indexfirstBoundBase=0.3
+	indexfirstBoundBase=0
 	indexsecondBound=0.8
-	indexsecondBoundBase=0.3
+	indexsecondBoundBase=0
 
 	#AI
 	AI_GAME=AI_JKL.AI();
@@ -55,8 +56,12 @@ class Data:
 		return self.selfTricks - self.opponentTricks
     #from 0 to 1, chance to win this round
 	def challenge(self):
-		index=self.HandDiffCoefficient*(self.selfHandsum-self.opponentHandsum)/self.decknum + self.TrickCoefficient*(self.selfTricks-self.opponentTricks)/(len(self.selfHand))
-		print "card diff is "+str((self.selfHandsum-self.opponentHandsum)/self.decknum)
+		print "dicknum is "+str(self.decknum)
+		print "hand is %s" % self.selfHand
+		index=self.HandDiffCoefficient*1.0*(self.selfHandsum-self.getOpponentHandSum())/self.decknum \
+			+ self.TrickCoefficient*1.0*(self.selfTricks-self.opponentTricks)/(len(self.selfHand))
+		print "card diff is "+str(1.0*(self.selfHandsum-self.getOpponentHandSum())/self.decknum)
+		print "trick diff is " + str(self.selfTricks-self.opponentTricks)
 		ratio=(index-self.ChallengeLowerBound)/self.ChallengeBoundLength
 		print "win chance is "+str(ratio)
 		if ratio<0:
@@ -65,8 +70,8 @@ class Data:
 			return 1
 		return ratio
 
-	def getOpponentHandSum(self,cardnum):
-		self.opponentHandsum = (self.decksum/self.decknum)*cardnum
+	def getOpponentHandSum(self):
+		self.opponentHandsum = (self.decksum/self.decknum)*self.opponentHandNum
 		return self.opponentHandsum
 	def shuffle(self):
 		self.decksum=0
@@ -85,15 +90,25 @@ class Data:
 		self.selfTricks=0
 		self.opponentTricks=0
 		self.selfHand=[0,0,0,0,0]
-		self.selfHand=hand
+		
+		self.selfHand=sorted(hand)
 		self.selfHandsum=0
 		for i in range(len(self.selfHand)):
 			self.selfHandsum+=self.selfHand[i]
+			self.decksum-=self.selfHand[i]
+		print "gameStart, decknum -5"
 		self.decknum-=5
+		self.opponentHandNum=5
 
 	def gameEnd(self):
 		self.selfTricks=0
 		self.opponentTricks=0
+		print "gameEnd, decknum -" +str(self.opponentHandNum)
+		self.decknum-=self.opponentHandNum
+		self.decksum-=(self.decksum/self.decknum)*self.opponentHandNum
+		self.opponentHandNum=0
+		if(self.decknum<10):
+			self.shuffle()
 
 		while(len(self.selfHand)!=0):
 			self.selfHand.pop()
@@ -108,6 +123,7 @@ class Data:
 		self.deck[cardval-1]-=1
 		self.decksum-=cardval
 		self.decknum-=1
+		self.opponentHandNum-=1
 		
 # x=Data()
 # x.shuffle()

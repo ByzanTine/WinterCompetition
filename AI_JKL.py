@@ -17,7 +17,7 @@ class AI:
 		self.totalCount+=1
 		return self.totalCount >= self.countPeriod
 	def getNewParameters(self, listOfParameters, listOfBases):
-		print "for "+listOfParameters+", winRate is "+str(self.winCount*1.0/self.totalCount)
+		print ("for %s" % listOfParameters)+", winRate is "+str(self.winCount*1.0/self.totalCount)
 		if self.lastWinPercentage > self.winCount*1.0/self.totalCount :
 			print "fallback"
 			listOfParameters=lastListOfParameters
