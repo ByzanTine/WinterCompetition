@@ -12,13 +12,13 @@ class Data:
 
   #coefficients
 	HandDiffCoefficient=0
-  HandDiffCoefficientBase=2
+	HandDiffCoefficientBase=2
 	TrickCoefficient=0
-  TrickCoefficientBase=10
-  ChallengeLowerBound=-10
-  ChallengeLowerBoundBase=-10
-  ChallengeBoundLength=20
-  ChallengeBoundLengthBase=10
+	TrickCoefficientBase=10
+	ChallengeLowerBound=-10
+	ChallengeLowerBoundBase=-10
+	ChallengeBoundLength=20
+	ChallengeBoundLengthBase=10
 	indexfirstBound=0
 	indexsecondBound=0
 	def getRank(self,val):
@@ -32,11 +32,11 @@ class Data:
 	def challenge(self):
 		index=self.HandDiffCoefficient*(self.selfHandsum-self.opponentHandsum) + self.TrickCoefficient*(self.selfTricks-self.opponentTricks)
 		ratio=(index-ChallengeLowerBound)/ChallengeBoundLength
-    if ratio<0:
-      return 0
-    if ratio>1:
-      return 1
-    return ratio
+		if ratio<0:
+			return 0
+		if ratio>1:
+			return 1
+		return ratio
 
 	def getOpponentHandSum(self,cardnum):
 		self.opponentHandsum = (self.decksum/self.decknum)*cardnum
