@@ -1,7 +1,14 @@
 import math
 def responseToChallenge(gameData, isPlayingSecond):
-    if gameData.getTrickDiff is 2:
+    if gameData.getTrickDiff() is 2:
         return False
+    if gameData.getTrickDiff() is -2:
+        return True
+    if isPlayingSecond:
+        if gameData.challenge() > :
+            return True
+    elif gameData.challenge() > :
+            return True
 	return False;
 def issueChanllenge(gameData, isPlayingSecond, opponentsCard=0):
 	return False;
