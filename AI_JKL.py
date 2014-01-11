@@ -12,7 +12,7 @@ class AI:
 			self.winCount+=1;
 		self.totalCount+=1;
 		return self.totalCount >= self.countPeriod
-	def getnewParameters(self, listOfParameters):
+	def getnewParameters(self, listOfParameters, listOfBases):
 		for x in range(0, len(listOfParameters)):
 			listOfParameters[x]=listOfParameters[x]*(1+self.shaking*(random.random()-0.5));
 		self.shaking*=self.shakDecreaseRatio;
@@ -21,4 +21,4 @@ class AI:
 		return listOfParameters;
 # ai = AI();
 # for i in range(10000):
-	
+# 

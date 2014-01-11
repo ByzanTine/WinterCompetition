@@ -8,8 +8,16 @@ class Data:
 	opponentHandsum=0
 	selfTricks=0
 	opponentTricks=0
+
+  #coefficients
 	HandDiffCoefficient=0
+  HandDiffCoefficientBase=2
 	TrickCoefficient=0
+  TrickCoefficientBase=10
+  ChallengeLowerBound=-10
+  ChallengeLowerBoundBase=-10
+  ChallengeBoundLength=20
+  ChallengeBoundLengthBase=10
 
 	def getRank(self,val):
 		rank=0
@@ -18,11 +26,15 @@ class Data:
 		rank+=self.deck[val-1]/2
 		return rank
 
+#from 0 to 1, chance to win this round
 	def challenge(self):
 		index=self.HandDiffCoefficient*(self.selfHandsum-self.opponentHandsum) + self.TrickCoefficient*(self.selfTricks-self.opponentTricks)
-		#print "challenge index: "
-		#print a
-		return index
+		ratio=(index-ChallengeLowerBound)/ChallengeBoundLength
+    if ratio<0:
+      return 0
+    if ratio>1:
+      return 1
+    return ratio
 
 	def shuffle(self):
 		self.decksum=0
