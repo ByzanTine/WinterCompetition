@@ -11,12 +11,11 @@ class Data:
 	HandDiffCoefficient=0
 	TrickCoefficient=0
 
-
 	def getRank(self):
 		return 1
 
 	def challenge(self):
-		return 1
+		return 0.1
 
 	def shuffle(self):
 		self.decksum=0
