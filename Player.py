@@ -14,6 +14,8 @@ class PlayerT:
 
 	def requests(self, req):
 		#first hand
+		self.data.selfPoints=req["state"]["your_points"]
+		self.data.opponentPoints=req["state"]["their_points"]
 		if len(req["state"]["hand"]) == 5 and self.data.selfHand[0]==0:
 			self.data.gameStart(req["state"]["hand"])
 			

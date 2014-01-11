@@ -12,6 +12,8 @@ class Data:
 	opponentHandNum=0
 	selfTricks=0
 	opponentTricks=0
+	selfPoints=0
+	opponentPoints=0
 	#coefficients
 	#*Base is how much it will change in the AI parameter floating
 	HandDiffCoefficient=10
@@ -25,9 +27,16 @@ class Data:
 	indexfirstBound=0.7
 	indexfirstBoundBase=0.2
 	indexsecondBound=0.8
+<<<<<<< HEAD
 	indexsecondBoundBase=0.2
 	def __init__(self):
 		print "  HandDiffCoefficient is "+str(Data.HandDiffCoefficient)
+=======
+	indexsecondBoundBase=0
+	
+	#AI
+	AI_GAME=AI_JKL.AI();
+>>>>>>> cdab2dbb0e296389a92b55cc9f493ee37323fea2
 	def updateCoefficientsGame(self, win):
 		if AI_GAME.registerTournamentResult(win):
 			newParams=AI_GAME.getNewParameters([Data.HandDiffCoefficient, Data.TrickCoefficient, Data.ChallengeLowerBound, Data.ChallengeBoundLength, Data.indexfirstBound,Data.indexsecondBound],
