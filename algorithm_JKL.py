@@ -20,6 +20,10 @@ def responseToChallenge(gameData, isPlayingSecond):
             return False
         return gameData.getTrickDiff()>0
     if isPlayingSecond:
+        if len(gameData.selfHand) == 4 and sum(gameData.selfHand) - gameData.selfHand[0] > 31:
+            return True
+        if len(gameData.selfHand) == 3 and sum(gameData.selfHand) > 31:
+            return True
         if gameData.challenge() > gameData.indexsecondBound:
             return True
     elif gameData.challenge() > gameData.indexfirstBound:
