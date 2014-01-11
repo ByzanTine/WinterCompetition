@@ -9,6 +9,8 @@ class PlayerT:
 		self.in_challange = False
 		self.response = None
 		self.data=Data()
+		data.shuffle()
+
 	def requests(self, req):
 		#first hand
 		if req["player_number"] == 0:
@@ -22,18 +24,22 @@ class PlayerT:
 				self.response["response"]["card"]= playCard(self.data,False)
 		#second hand
 		else:
-			if req["state"]["can_challenge"] == "true" and issueChallenge(self.data,False):
+			if req["state"]["can_challenge"] == "true" and issueChallenge(self.data,True,self.reg["state"]["card"]):
 				self.response = copy(self.req_chal)
 				self.response["request_id"] = req["request_id"]
 				self.response["response"]["type"] = "offer_challenge"
 			else:
 				self.response = copy(self.req_card)
 				self.response["request_id"] = req["request_id"]
-				self.response["response"]["card"]= playCard(self.data,False)
+				self.response["response"]["card"]= playCard(self.data,True,self.reg["state"]["card"])
 
 	def challenge(self,req):
 		self.response = copy(self.req_chal)
-		self.response["response"]["type"] = "reject_challenge"
+
+		if responseToChallenge(self.data, req["state"]["player_number"])
+			self.response["response"]["type"] = "accept_challenge"
+		else
+			self.response["response"]["type"] = "reject_challenge"
 		self.response["request_id"] = req["request_id"]
 
 	def result(self, req):
