@@ -62,10 +62,18 @@ def playCard(gameData, isPlayingSecond, opponentsCard=0):
 		print "opponentsCard: " + str(opponentsCard)
 	print "selfHand: "
 	print gameData.selfHand
+    sub = gameData.selfHand[0]
 	if isPlayingSecond :
 		for i in gameData.selfHand:
 			if i > opponentsCard:
-				return i
+                if i - opponentsCard <= 5:
+                    return i
+                elif sub == opponentsCard
+                    return sub
+                else:
+                    return gameData.selfHand[0]
+            else:
+                sub = i
 		# if cannot find a bigger one return the least
 		return gameData.selfHand[0]
 	else :
