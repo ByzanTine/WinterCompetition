@@ -1,7 +1,7 @@
 def responseToChallenge(gameData):
-	return false;
+	return False;
 def issueChanllenge(gameData):
-	return false;
+	return False;
 #return the index of card to play
 def playCard(gameData):
 	return 0;
