@@ -26,10 +26,12 @@ def issueChallenge(gameData, isPlayingSecond, opponentsCard=0):
                 allBigger = False
         if allBigger and gameData.getTrickDiff() > 0:
             return True
+        if gameData.challenge() > gameData.indexsecondBound:
+            return True
     else: 
         if gameData.getTrickDiff() <= 0:
             return False
-        if gameData.getTrickDiff() is 2 and gameData.challenge() > gameData.indexfirstBound:
+        elif gameData.challenge() > gameData.indexfirstBound:
             return True
 	return False;
 #return the index of card to play
