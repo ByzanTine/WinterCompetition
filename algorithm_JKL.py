@@ -1,12 +1,8 @@
 import math
 def responseToChallenge(gameData, isPlayingSecond):
     if gameData.selfPoints is 9:
-        if isPlayingSecond and gameData.challenge() > gameData.indexsecondBound:
+        if sum(gameData.selfHand)/len(gameData.selfHand) > 7
             return True 
-        elif gameData.challenge() > gameData.indexfirstBound:
-            return True
-    if gameData.opponentPoints is 9:
-        return True
     if gameData.getTrickDiff() >= 3:
         return True
     if gameData.getTrickDiff() <= -3:
@@ -27,11 +23,13 @@ def responseToChallenge(gameData, isPlayingSecond):
     return False;
 def issueChallenge(gameData, isPlayingSecond, opponentsCard=0):
     print "issueChallenge: "+str(gameData.getTrickDiff())
-    if len(gameData.selfHand) is 5 and sum(gameData.selfHand) > 50:
+    if len(gameData.selfHand) is 5 and sum(gameData.selfHand) - gameData.selfHand[0] > 40:
         return True;
-    if len(gameData.selfHand) is 4 and sum(gameData.selfHand) > 40:
+    if len(gameData.selfHand) is 4 and sum(gameData.selfHand) - gameData.selfHand[0] > 30:
         return True;
-    if len(gameData.selfHand) is 3 and sum(gameData.selfHand) > 30:
+    if len(gameData.selfHand) is 3 and sum(gameData.selfHand) - gameData.selfHand[0] > 20 and gameData.getTrickDiff() > 0:
+        return True;
+    if len(gameData.selfHand) is 1 and sum(gameData.selfHand) = 13 and gameData.getTrickDiff() >= 0:
         return True;
     if gameData.opponentPoints is 9:
         if isPlayingSecond and gameData.challenge() > gameData.indexsecondBound:
