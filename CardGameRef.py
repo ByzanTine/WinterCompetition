@@ -1,5 +1,5 @@
 # from array import *
-
+import AI_JKL
 class Data:
 	deck=[]
 	decksum=0
@@ -9,18 +9,41 @@ class Data:
 	opponentHandsum=0
 	selfTricks=0
 	opponentTricks=0
-
-  #coefficients
+	#coefficients
+	#*Base is how much it will change in the AI parameter floating
 	HandDiffCoefficient=0
-  HandDiffCoefficientBase=2
+	HandDiffCoefficientBase=2
 	TrickCoefficient=0
-  TrickCoefficientBase=10
-  ChallengeLowerBound=-10
-  ChallengeLowerBoundBase=-10
-  ChallengeBoundLength=20
-  ChallengeBoundLengthBase=10
+	TrickCoefficientBase=10
+	ChallengeLowerBound=-10
+	ChallengeLowerBoundBase=-10
+	ChallengeBoundLength=20
+	ChallengeBoundLengthBase=10
 	indexfirstBound=0
+	indexfirstBoundBase=0.5
 	indexsecondBound=0
+	indexsecondBoundBase=0.5
+
+	#AI
+	AI_GAME=AI_JKL.AI();
+	def updateCoefficientsGame(self, win):
+		if AI_GAME.registerTournamentResult(win):
+			newParams=AI_GAME.getNewParameters([self.HandDiffCoefficient, self.TrickCoefficient, self.ChallengeLowerBound, self.ChallengeBoundLength, self.indexfirstBound, self.indexsecondBound],
+				[self.HandDiffCoefficientBase, self.TrickCoefficientBase, self.ChallengeLowerBoundBase, self.ChallengeBoundLengthBase, self.indexfirstBoundBase, self.indexsecondBoundBase])
+			self.HandDiffCoefficient=newParams[0]
+			self.TrickCoefficient=newParams[1]
+			self.ChallengeLowerBound=newParams[2]
+			self.ChallengeBoundLength=newParams[3]
+			self.indexfirstBound=newParams[4]
+			self.indexsecondBound=newParams[5]
+	def printCoefficient(self):
+		print "HandDiffCoefficient "+self.HandDiffCoefficient
+		print "TrickCoefficient"+self.TrickCoefficient
+		print "ChallengeLowerBound"+self.ChallengeLowerBound
+		print "ChallengeBoundLength"+self.ChallengeBoundLength
+		print "indexfirstBound"+self.indexfirstBound
+		print "indexsecondBound"+self.indexsecondBound
+
 	def getRank(self,val):
 		rank=0
 		for i in range (0,val-1):
@@ -28,15 +51,15 @@ class Data:
 		rank+=self.deck[val-1]/2
 		return rank
 
-#from 0 to 1, chance to win this round
+    #from 0 to 1, chance to win this round
 	def challenge(self):
 		index=self.HandDiffCoefficient*(self.selfHandsum-self.opponentHandsum) + self.TrickCoefficient*(self.selfTricks-self.opponentTricks)
-		ratio=(index-ChallengeLowerBound)/ChallengeBoundLength
-    if ratio<0:
-      return 0
-    if ratio>1:
-      return 1
-    return ratio
+		ratio=(index-self.ChallengeLowerBound)/self.ChallengeBoundLength
+		if ratio<0:
+			return 0
+		if ratio>1:
+			return 1
+		return ratio
 
 	def getOpponentHandSum(self,cardnum):
 		self.opponentHandsum = (self.decksum/self.decknum)*cardnum
