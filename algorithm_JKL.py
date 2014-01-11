@@ -36,10 +36,14 @@ def issueChallenge(gameData, isPlayingSecond, opponentsCard=0):
     if len(gameData.selfHand) ==1 and gameData.getTrickDiff() > 0:
         return True;
     if gameData.opponentPoints == 9:
-        if isPlayingSecond and gameData.challenge() > gameData.indexsecondBound:
-            return True 
-        elif gameData.challenge() > gameData.indexfirstBound:
-            return True
+        if len(gameData.selfHand) ==5 and sum(gameData.selfHand) - gameData.selfHand[0] > 35:
+            return True;
+        if len(gameData.selfHand) ==4 and sum(gameData.selfHand) - gameData.selfHand[0] > 26:
+            return True;
+        if len(gameData.selfHand) ==3 and sum(gameData.selfHand) - gameData.selfHand[0] > 17 and gameData.getTrickDiff() > 0:
+            return True;
+        if len(gameData.selfHand) ==1 and gameData.getTrickDiff() > 0:
+            return True;
     if gameData.getTrickDiff() >= 3:
         return False
     if gameData.getTrickDiff() <= -3:
