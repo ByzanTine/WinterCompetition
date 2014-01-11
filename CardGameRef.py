@@ -16,7 +16,10 @@ class Data:
 		return 1
 
 	def challenge(self):
-		return 1
+		index=self.HandDiffCoefficient*(self.selfHandsum-self.opponentHandsum) + self.TrickCoefficient*(self.selfTricks-self.opponentTricks)
+		#print "challenge index: "
+		#print a
+		return index
 
 	def shuffle(self):
 		self.decksum=0
