@@ -101,9 +101,7 @@ class Data:
 		self.selfHandsum=0
 	#make sure handval exist
 	def updateHand(self,handval):
-		self.deck[handval-1]-=1
-		self.decksum-=handval
-		self.decknum-=1
+		
 		self.selfHand.remove(handval)
 		self.selfHandsum-=handval
 	def cardExposed(self,cardval):
