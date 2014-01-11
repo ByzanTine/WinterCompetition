@@ -15,30 +15,33 @@ class Data:
 	opponentPoints=0
 	#coefficients
 	#*Base is how much it will change in the AI parameter floating
-	HandDiffCoefficient=10
-	HandDiffCoefficientBase=3
-	TrickCoefficient=10
-	TrickCoefficientBase=3
-	ChallengeLowerBound=-10
-	ChallengeLowerBoundBase=5
-	ChallengeBoundLength=20
-	ChallengeBoundLengthBase=5
-	indexfirstBound=0.7
+	HandDiffCoefficient=9.836290665392232
+	HandDiffCoefficientBase=0.3
+	TrickCoefficient=9.836290665392232
+	TrickCoefficientBase=0.3
+	ChallengeLowerBound=-9.462321304806025
+	ChallengeLowerBoundBase=0.5
+	ChallengeBoundLength= 19.57615855916059
+	ChallengeBoundLengthBase=0.5
+	indexfirstBound=0.7140976403820799
 	indexfirstBoundBase=0.01
-	indexsecondBound=0.8
+	indexsecondBound=0.7770826012818803
 	indexsecondBoundBase=0.01
+	decknumRatio=1.194497844125556
+	decknumRatioBase=0.1
 	def __init__(self):
 		self.selfHand=[0,0,0,0,0]
 	def updateCoefficientsGame(self, win):
 		if AI_GAME.registerTournamentResult(win):
-			newParams=AI_GAME.getNewParameters([Data.HandDiffCoefficient, Data.TrickCoefficient, Data.ChallengeLowerBound, Data.ChallengeBoundLength, Data.indexfirstBound,Data.indexsecondBound],
-				[Data.HandDiffCoefficientBase, Data.TrickCoefficientBase, Data.ChallengeLowerBoundBase, Data.ChallengeBoundLengthBase, Data.indexfirstBoundBase, Data.indexsecondBoundBase])
+			newParams=AI_GAME.getNewParameters([Data.HandDiffCoefficient, Data.TrickCoefficient, Data.ChallengeLowerBound, Data.ChallengeBoundLength, Data.indexfirstBound,Data.indexsecondBound, Data.decknumRatio],
+				[Data.HandDiffCoefficientBase, Data.TrickCoefficientBase, Data.ChallengeLowerBoundBase, Data.ChallengeBoundLengthBase, Data.indexfirstBoundBase, Data.indexsecondBoundBase, Data.decknumRatioBase])
 			Data.HandDiffCoefficient=newParams[0]
 			Data.TrickCoefficient=newParams[1]
 			Data.ChallengeLowerBound=newParams[2]
 			Data.ChallengeBoundLength=newParams[3]
 			Data.indexfirstBound=newParams[4]
 			Data.indexsecondBound=newParams[5]
+			Data.decknumRatio=newParams[6]
 	def printCoefficient(self):
 		print "HandDiffCoefficient "+self.HandDiffCoefficient
 		print "TrickCoefficient"+self.TrickCoefficient
@@ -59,11 +62,13 @@ class Data:
 	def challenge(self):
 		print "dicknum is "+str(self.decknum)
 		print "hand is %s" % self.selfHand
+		print "hand rank sum is " + str(self.getHandRankSum())
+		print "opp hand rank sum is " + str(self.getOpponentHandRankSum())
 		if(len(self.selfHand)!=0):
-			index=self.HandDiffCoefficient*1.0*(self.getHandRankSum()-self.getOpponentHandRankSum())/(self.decknum**2) \
+			index=self.HandDiffCoefficient*1.0*(self.getHandRankSum()-self.getOpponentHandRankSum())/(self.decknum**self.decknumRatio) \
 				+ self.TrickCoefficient*1.0*(self.selfTricks-self.opponentTricks)/(len(self.selfHand))
 		else:
-			index=self.HandDiffCoefficient*1.0*(self.getHandRankSum()-self.getOpponentHandRankSum())/(self.decknum**2) \
+			index=self.HandDiffCoefficient*1.0*(self.getHandRankSum()-self.getOpponentHandRankSum())/(self.decknum**self.decknumRatio) \
 				+ self.TrickCoefficient*1.0*(self.selfTricks-self.opponentTricks)
 		
 		print "card diff is "+str(1.0*(self.getHandRankSum()-self.getOpponentHandRankSum())/(self.decknum**2))
@@ -159,6 +164,7 @@ class Data:
 		self.opponentHandNum-=1
 		for i in self.selfHand:
 			self.deck[i-1]+=1
+		self.getOpponentHandRankSum()
 		self.ohrs_cache-=self.getRank(cardval)
 		for i in self.selfHand:
 			self.deck[i-1]-=1
